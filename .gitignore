@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+data/
+debug_output.html
+debug_html.py
+.claude/

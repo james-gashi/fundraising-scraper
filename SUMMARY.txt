@@ -1,0 +1,30 @@
+StrictlyVC Funding Scraper & NYC Job Finder - Implementation Summary
+=====================================================================
+
+Created: 2026-02-12
+
+Architecture:
+  Sitemap XML --> Article URLs --> Playwright renders pages -->
+  Parse funding paragraphs (regex) --> Company list -->
+  Job search (python-jobspy) --> Filtered CSV output
+
+Files Created:
+  requirements.txt  - Dependencies: playwright, beautifulsoup4, lxml, python-jobspy, requests, pandas
+  config.py         - All constants: URLs, selectors, keywords, delays, search params
+  scraper.py        - Fetches sitemap XML, filters by date, scrapes articles with Playwright (waits for #content-blocks)
+  parser.py         - Finds funding section headings, walks sibling <p> tags, applies 3 regex patterns ordered by specificity
+  job_search.py     - Uses python-jobspy to search Indeed + Google Jobs per company, filters by entry-level + tech/sales keywords
+  output.py         - Saves fundings_, jobs_, and combined_ files to data/ in CSV or JSON
+  main.py           - CLI with --max-articles, --days, --skip-jobs, --output-format flags
+
+Usage:
+  pip install -r requirements.txt
+  playwright install chromium
+  python main.py --max-articles 2 --days 7
+  python main.py --skip-jobs          # scrape/parse only, no job search
+  python main.py --output-format json # output as JSON instead of CSV
+
+Output:
+  data/fundings_YYYY-MM-DD.csv  - All parsed funding entries
+  data/jobs_YYYY-MM-DD.csv      - All matching job listings
+  data/combined_YYYY-MM-DD.csv  - Funding data joined with job results
