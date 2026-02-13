@@ -37,7 +37,7 @@ FUNDING_PATTERNS = [
     ),
     # Pattern 3: Minimal — "Company ... raised $X ... round/funding/seed"
     re.compile(
-        r"^(?P<company>[A-Z][^,]+?)\b.*?"
+        r"^(?P<company>[A-Z][^,]+),\s+.*?"
         r"(?:has\s+)?raised\s+(?:a\s+)?\$(?P<amount>[\d.,]+\s*(?:billion|million)?)\s+"
         r"(?:in\s+)?(?P<round>[^.]*?(?:round|funding|seed)[^.]*?)"
         r"(?:\s*led\s*by\s*(?P<lead_investor>[^,.]+?))?[.,]",

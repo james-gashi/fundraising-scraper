@@ -20,8 +20,27 @@ FUNDING_HEADINGS = [
 # Job search parameters
 JOB_SEARCH_LOCATION = "New York, NY"
 JOB_SEARCH_DISTANCE_MILES = 25
-JOB_SEARCH_DELAY = 4  # seconds between company searches
-JOB_SEARCH_RESULTS_WANTED = 20  # per company per site
+JOB_SEARCH_DELAY = 1  # seconds between ATS API requests
+
+# ATS (Applicant Tracking System) API endpoints
+ATS_APIS = {
+    "greenhouse": "https://boards-api.greenhouse.io/v1/boards/{slug}/jobs",
+    "lever": "https://api.lever.co/v0/postings/{slug}",
+    "ashby": "https://api.ashbyhq.com/posting-api/job-board/{slug}",
+}
+ATS_REQUEST_TIMEOUT = 10  # seconds
+
+# Location keywords for filtering job locations (case-insensitive)
+LOCATION_KEYWORDS = ["new york", "nyc", "ny", "remote"]
+
+# Common company name suffixes to strip when generating ATS slugs
+SLUG_STRIP_SUFFIXES = [
+    "inc", "llc", "co", "corp", "corporation", "company",
+    "ai", "labs", "lab", "technologies", "technology", "tech",
+    "health", "medical", "therapeutics", "bio", "biotechnologies",
+    "systems", "security", "robotics", "holdings", "enterprises",
+    "services", "solutions", "markets", "computing",
+]
 
 # Entry-level keywords (matched case-insensitively against job title)
 ENTRY_LEVEL_KEYWORDS = [
@@ -34,8 +53,8 @@ ENTRY_LEVEL_KEYWORDS = [
     "new graduate",
     "jr.",
     "jr ",
-    "i ",  # e.g. "Software Engineer I"
-    " 1",  # e.g. "Analyst 1"
+    " i ",  # e.g. "Software Engineer I" (standalone Roman numeral)
+    " 1 ",  # e.g. "Analyst 1" (standalone number)
 ]
 
 # Tech/sales role keywords (matched case-insensitively against job title)
@@ -47,7 +66,7 @@ ROLE_KEYWORDS = [
     "data",
     "machine learning",
     "ml ",
-    "ai ",
+    " ai ",
     "devops",
     "cloud",
     "frontend",
@@ -56,15 +75,16 @@ ROLE_KEYWORDS = [
     "back-end",
     "fullstack",
     "full-stack",
-    "sales",
     "sdr",
     "bdr",
     "account executive",
     "business development",
+    "sales development",
+    "sales engineer",
     "solutions",
     "product",
     "technical",
-    "it ",
+    " it ",
     "security",
     "qa",
     "quality assurance",
@@ -87,6 +107,11 @@ SENIOR_KEYWORDS = [
     "chief",
     "architect",
     "distinguished",
+    " ii",   # Roman numeral levels II+
+    " iii",
+    " iv",
+    " v ",
+    "strategist",
 ]
 
 # Output directory
