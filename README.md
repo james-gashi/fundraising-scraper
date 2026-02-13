@@ -49,6 +49,29 @@ StrictlyVC Sitemap XML
 
 Python, Playwright, BeautifulSoup, lxml, pandas, Flask, requests
 
+## Setup
+
+```bash
+pip install playwright beautifulsoup4 lxml pandas flask requests
+playwright install chromium
+```
+
+## Usage
+
+**CLI:**
+```bash
+python main.py                       # full pipeline (scrape + jobs)
+python main.py --skip-jobs           # scrape fundings only
+python main.py --days 14             # look back 14 days
+python main.py --max-articles 10     # scrape up to 10 articles
+python main.py --output-format json  # output as JSON instead of CSV
+```
+
+**Web UI:**
+```bash
+python app.py                        # starts Flask on http://localhost:5000
+```
+
 ## Sample Output
 
 From a single run scanning 5 articles:
@@ -56,7 +79,3 @@ From a single run scanning 5 articles:
 - **89 companies** identified and searched across 3 ATS platforms
 - **30+ companies** found on at least one ATS platform
 - Filtered results returned verified, entry-level positions at the actual funded companies
-
-## Repository
-
-github.com/james-gashi/fundraising-scraper
