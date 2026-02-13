@@ -71,5 +71,23 @@ ROLE_KEYWORDS = [
     "support engineer",
 ]
 
+# Senior/executive keywords to exclude (matched case-insensitively against job title)
+SENIOR_KEYWORDS = [
+    "senior",
+    "sr.",
+    "sr ",
+    "staff",
+    "principal",
+    "lead",
+    "manager",
+    "director",
+    "vp ",
+    "vice president",
+    "head of",
+    "chief",
+    "architect",
+    "distinguished",
+]
+
 # Output directory
 DATA_DIR = "data"

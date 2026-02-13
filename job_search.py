@@ -45,10 +45,18 @@ def search_company_jobs(company_name: str) -> pd.DataFrame:
     filtered = jobs[role_mask].copy()
 
     # Filter: title should match entry-level keywords
-    entry_mask = filtered["title"].apply(
-        lambda t: _matches_keywords(str(t), config.ENTRY_LEVEL_KEYWORDS)
-    )
-    filtered = filtered[entry_mask].copy()
+    if not filtered.empty:
+        entry_mask = filtered["title"].apply(
+            lambda t: _matches_keywords(str(t), config.ENTRY_LEVEL_KEYWORDS)
+        )
+        filtered = filtered[entry_mask].copy()
+
+    # Filter out: exclude senior/executive titles
+    if not filtered.empty:
+        senior_mask = filtered["title"].apply(
+            lambda t: _matches_keywords(str(t), config.SENIOR_KEYWORDS)
+        )
+        filtered = filtered[~senior_mask].copy()
 
     if not filtered.empty:
         filtered["searched_company"] = company_name
